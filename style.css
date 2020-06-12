@@ -1,0 +1,58 @@
+body {
+	padding: 20px;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	background: #fffae6;
+
+}
+
+
+.post {
+
+	width: 500px;
+  	border: 15px;
+  	padding: 8px;
+  	margin: 15px;
+
+}
+
+p {
+
+	text-indent: 50px;
+
+}
+
+ /* unvisited link */
+a:link {
+  color: black;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+}
+
+/* mouse over link */
+a:hover {
+  color: #a01d1d;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
+
+
+
+
+
+
+
+.previous {
+  background-color: #fffae6;
+  color: black;
+}
+
+.next {
+  background-color: #fffae6;
+  color: white;
+}
