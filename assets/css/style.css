@@ -367,13 +367,13 @@ p { max-width: 38rem; }
   font-size: var(--step--1);
   font-weight: 600;
   padding: 0.6em 1.2em;
-  background: var(--ink);
+  background: var(--accent);
   color: var(--paper);
   border: none;
   cursor: pointer;
 }
  
-.subscribe-form button:hover { background: var(--accent); }
+.subscribe-form button:hover { background: var(--ink); }
  
 .subscribe-note {
   margin-top: 0.6em;
