@@ -66,6 +66,29 @@ title: Home
     pointer-events: none;
   }
 
+  .corner-line-v {
+  position: fixed;
+  left: 2rem;
+  bottom: 2rem;
+  width: 1px;
+  height: 30vh;
+  background: var(--ink);
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.corner-line-h {
+  position: fixed;
+  left: 2rem;
+  bottom: 2rem;
+  height: 1px;
+  width: 30vw;
+  background: var(--ink);
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
+}
 
   .field {
     position: relative;
@@ -136,6 +159,8 @@ title: Home
 </head>
 <body>
   <div class="field">
+    <div class="corner-line-v"></div>
+    <div class="corner-line-h"></div>
     <span class="side-name">James Yancey</span>
     <span class="hint" style="top: 4%; left: 6%;">touch</span>
     <span class="hint" style="top: 18%; left: 84%;">the</span>
