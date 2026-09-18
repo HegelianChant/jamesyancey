@@ -1,0 +1,18 @@
+---
+layout: default
+title: Writing
+section: blog
+permalink: /blog/
+---
+<h1>Writing</h1>
+<div class="entry-list">
+  {% for post in site.posts %}
+  <div class="entry-row">
+    <div class="meta">{{ post.date | date: "%-d %b %Y" }}</div>
+    <div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p class="excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>

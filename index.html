@@ -1,0 +1,173 @@
+---
+layout: null
+title: Home
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ site.title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #ffffff;
+    --ink: #221f1a;
+    --shape-dim: #5c564a;
+    --font-display: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    --font-cjk: 'Noto Sans SC', 'Space Grotesk', sans-serif;
+
+    --c-rose:  rgba(196, 92, 92, 0.32);
+    --c-ochre: rgba(198, 150, 62, 0.34);
+    --c-sage:  rgba(104, 143, 92, 0.3);
+    --c-blue:  rgba(94, 130, 158, 0.3);
+    --c-red:   rgba(196, 41, 31, 0.9);
+    --c-red-deep: rgb(158, 28, 20);
+
+    --t-rose:  #7a3f3f;
+    --t-ochre: #7a5f2c;
+    --t-sage:  #3f5c3f;
+    --t-blue:  #3f5870;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--ground);
+    overflow: hidden;
+  }
+  body { font-family: var(--font-display); }
+
+  .hint {
+    position: absolute;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--shape-dim);
+    opacity: 0.55;
+    letter-spacing: 0.02em;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .side-name {
+    position: fixed;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+
+  .field {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .shape {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transform-origin: center;
+    transition: transform 0.6s ease, background 0.6s ease;
+  }
+
+  .shape span {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    text-align: center;
+    padding: 0.4em;
+  }
+
+  .shape.active {
+    animation: pulse 2.4s ease-in-out infinite;
+    background: var(--c-red-deep);
+  }
+  .shape.active span { opacity: 1; }
+
+  #s-writing span, #s-travel span { font-size: 0.78rem; }
+  #s-photos span { color: #ffffff; font-size: 0.78rem; }
+  #s-about span { color: #ffffff; font-size: 0.78rem; }
+  #s-writing span { color: #ffffff; }
+  #s-travel span { color: #ffffff; }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.09); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shape.active { animation: none; transform: scale(1.05); }
+  }
+
+  .square-grid {
+    position: absolute;
+    top: 42%;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: repeat(2, clamp(3.5rem, 14vw, 6rem));
+    grid-template-rows: repeat(2, clamp(3.5rem, 14vw, 6rem));
+    gap: 1.75rem;
+  }
+
+  .square-grid .shape { position: static; width: 100%; height: 100%; aspect-ratio: 1; }
+
+  #s-writing { background: var(--c-red); }
+  #s-photos  { background: var(--c-red); }
+  #s-travel  { background: var(--c-red); }
+  #s-about   { background: var(--c-red); }
+</style>
+</head>
+<body>
+  <div class="field">
+    <span class="side-name">James Yancey</span>
+    <span class="hint" style="top: 4%; left: 6%;">touch</span>
+    <span class="hint" style="top: 18%; left: 84%;">the</span>
+    <span class="hint" style="top: 90%; left: 60%;">squares</span>
+    <div class="square-grid">
+      <a href="{{ '/blog/' | relative_url }}" class="shape" id="s-writing"><span>Writing</span></a>
+      <a href="{{ '/photos/' | relative_url }}" class="shape" id="s-photos"><span lang="zh" style="font-family: var(--font-cjk);">照片</span></a>
+      <a href="{{ '/travel/' | relative_url }}" class="shape" id="s-travel"><span>Travel</span></a>
+      <a href="{{ '/about/' | relative_url }}" class="shape" id="s-about"><span>About</span></a>
+    </div>
+  </div>
+
+<script>
+  document.querySelectorAll('.shape').forEach(function (shape) {
+    shape.addEventListener('click', function (e) {
+      if (!shape.classList.contains('active')) {
+        e.preventDefault();
+        document.querySelectorAll('.shape.active').forEach(function (s) {
+          if (s !== shape) s.classList.remove('active');
+        });
+        shape.classList.add('active');
+      }
+    });
+  });
+
+  document.querySelector('.field').addEventListener('click', function (e) {
+    if (!e.target.closest('.shape')) {
+      document.querySelectorAll('.shape.active').forEach(function (s) {
+        s.classList.remove('active');
+      });
+    }
+  });
+</script>
+</body>
+</html>

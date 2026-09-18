@@ -1,0 +1,19 @@
+---
+layout: default
+title: Photos
+section: photos
+permalink: /photos/
+body_class: photos-index
+---
+<h1>Photos</h1>
+<div class="album-grid">
+  {% assign all_albums = site.photos | sort: 'date' | reverse %}
+  {% for album in all_albums %}
+  <a class="album-cover" href="{{ album.url | relative_url }}">
+    <span class="cover-img">
+      <img src="{{ album.cover | relative_url }}" alt="{{ album.title }}" loading="lazy">
+    </span>
+    <span class="cap">{{ album.title }}{% if album.location %}<br>{{ album.location }}{% endif %}</span>
+  </a>
+  {% endfor %}
+</div>

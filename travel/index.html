@@ -1,0 +1,19 @@
+---
+layout: default
+title: Travel
+section: travel
+permalink: /travel/
+---
+<h1>Travel</h1>
+<div class="entry-list">
+  {% assign all_travel = site.travel | sort: 'date' | reverse %}
+  {% for entry in all_travel %}
+  <div class="entry-row">
+    <div class="meta">{{ entry.location }}</div>
+    <div>
+      <h3><a href="{{ entry.url | relative_url }}">{{ entry.title }}</a></h3>
+      <p class="excerpt">{{ entry.excerpt | strip_html | truncate: 160 }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>

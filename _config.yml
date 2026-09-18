@@ -1,0 +1,50 @@
+title: James
+tagline: "Notes, photographs, and places."
+description: "Personal site — writing, photo journal, and travel notes."
+url: "" # e.g. https://yourusername.github.io  — leave blank for project pages
+baseurl: "/jamesyancey" # e.g. /your-repo-name if this is a project page, not a user/org page
+
+author: James
+
+# Collections power the photo journal and travel journal as their own
+# content types, separate from the blog's _posts.
+collections:
+  photos:
+    output: true
+    permalink: /photos/:path/
+  travel:
+    output: true
+    permalink: /travel/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      section: "blog"
+  - scope:
+      path: ""
+      type: "photos"
+    values:
+      layout: "photo"
+      section: "photos"
+  - scope:
+      path: ""
+      type: "travel"
+    values:
+      layout: "travel"
+      section: "travel"
+
+permalink: /blog/:year/:month/:day/:title/
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+exclude:
+  - README.md

@@ -1,0 +1,330 @@
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+:root {
+  /* Color — warm paper & ink, not a default cream/terracotta pairing */
+  --paper: #ffffff;
+  --paper-deep: #e1d9c4;
+  --ink: #221f1a;
+  --ink-soft: #5c564a;
+  --accent: #a6572b;
+  --line: #c9bfa6;
+
+  /* Same tint family as the landing page's squares — reused here so
+     the gallery feels like part of the same object, not a different
+     app bolted on. */
+  --t-rose:  #7a3f3f;
+  --t-ochre: #7a5f2c;
+  --t-sage:  #3f5c3f;
+  --t-blue:  #3f5870;
+  --tint-rose:  rgba(196, 92, 92, 0.14);
+  --tint-ochre: rgba(198, 150, 62, 0.16);
+  --tint-sage:  rgba(104, 143, 92, 0.14);
+  --tint-blue:  rgba(94, 130, 158, 0.14);
+
+  /* Type */
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  /* Scale — based on a 1.25 ratio, tuned by eye */
+  --step--1: 0.85rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.7rem;
+  --step-3: 2.4rem;
+  --step-4: 3.4rem;
+
+  /* Layout */
+  --rule: 1px solid var(--line);
+  --content-max: 42rem;
+  --nav-width: 14rem;
+  --gutter: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #221f1a;
+    --paper-deep: #2b2620;
+    --ink: #ede7d9;
+    --ink-soft: #b3a98e;
+    --accent: #d98a5c;
+    --line: #4a4436;
+  }
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+a:hover { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--step-4);
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+
+p { max-width: 38rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  a, .thumb img { transition: color 0.15s ease, opacity 0.15s ease; }
+}
+
+/* ==========================================================================
+   Site layout — single column; the old sidebar is gone, replaced by
+   the small .back-link
+   ========================================================================== */
+.site {
+  display: block;
+  min-height: 100vh;
+  max-width: 78rem;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: var(--gutter) var(--gutter) 0;
+}
+
+.back-link:hover { color: var(--accent); }
+
+.site-main {
+  padding: var(--gutter) calc(var(--gutter) * 2);
+}
+
+@media (max-width: 46rem) {
+  .site-main { padding: var(--gutter); }
+}
+
+/* ==========================================================================
+   Entry list — used by blog, photos, travel indexes
+   Hairline rules separate entries: a structural device, since each row
+   is one discrete piece of content with its own date/place metadata.
+   ========================================================================== */
+.entry-list {
+  border-top: var(--rule);
+}
+
+.entry-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: var(--gutter);
+  padding: 1.4em 0;
+  border-bottom: var(--rule);
+}
+
+.entry-row .meta {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  padding-top: 0.2em;
+}
+
+.entry-row h3 { margin: 0 0 0.3em; font-size: var(--step-1); }
+.entry-row h3 a { text-decoration: none; }
+
+.entry-row .excerpt {
+  color: var(--ink-soft);
+  font-size: var(--step-0);
+  margin: 0;
+}
+
+@media (max-width: 32rem) {
+  .entry-row { grid-template-columns: 1fr; gap: 0.3em; }
+}
+
+/* ==========================================================================
+   Photo grids — rows of two, used for both the albums index (covers)
+   and a single album's page (its photos). Same class, same rhythm.
+   ========================================================================== */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 1.5em 0;
+}
+
+@media (max-width: 30rem) {
+  .album-grid { grid-template-columns: 1fr; }
+}
+
+/* Albums index: each cell is a clickable cover with a caption overlay */
+.album-cover {
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: var(--rule);
+}
+
+.album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-cover:hover img { opacity: 0.85; }
+
+.album-cover .cap {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 0.6em 0.7em;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  background: linear-gradient(to top, rgba(34,31,26,0.75), transparent);
+  color: var(--paper);
+}
+
+/* Single album page: each cell is a plain photo, caption sits below it */
+.album-photo {
+  margin: 0;
+}
+
+.album-photo img {
+  width: 100%;
+  border: var(--rule);
+}
+
+.album-photo figcaption {
+  margin-top: 0.5em;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Article / single entry
+   ========================================================================== */
+.article-header { border-bottom: var(--rule); padding-bottom: 1.2em; margin-bottom: 1.5em; }
+.article-meta {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  display: flex;
+  gap: 1em;
+}
+
+.article-body { max-width: var(--content-max); }
+.article-body p, .article-body ul, .article-body ol { max-width: var(--content-max); }
+.article-body img { margin: 1.5em 0; border: var(--rule); }
+.article-body h2, .article-body h3 { margin-top: 1.5em; }
+.article-body blockquote {
+  margin: 1.5em 0;
+  padding-left: 1em;
+  border-left: 2px solid var(--accent);
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Home / index
+   ========================================================================== */
+.hero { max-width: var(--content-max); margin-bottom: 3em; }
+.hero p { font-size: var(--step-1); }
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  margin: 0 0 0.8em;
+}
+
+.home-section { margin-bottom: 3em; }
+
+.site-footer {
+  border-top: var(--rule);
+  margin-top: 3em;
+  padding-top: 1em;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Gallery index — art-object treatment, scoped to .photos-index only.
+   Individual album pages and the homepage's "recent albums" section
+   still use the plain .album-grid/.album-cover styles above.
+   ========================================================================== */
+.photos-index .album-grid {
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 2.5rem 1.5rem;
+  align-items: start;
+}
+
+.photos-index .album-cover {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  border: none;
+}
+
+.photos-index .album-cover .cover-img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 2px solid var(--cover-tint);
+  background: var(--cover-wash);
+}
+
+.photos-index .album-cover .cover-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photos-index .album-cover:hover .cover-img img { opacity: 0.85; }
+
+.photos-index .album-cover .cap {
+  position: static;
+  background: none;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  color: var(--cover-tint);
+}
+
+/* Color cycles through the four landing-page tints, and each item
+   sits at a slightly different height — together this reads as
+   scattered rather than a uniform grid, without needing to hand-place
+   every album the way the landing page's four fixed squares are. */
+.photos-index .album-cover:nth-child(4n+1) { --cover-tint: var(--t-rose);  --cover-wash: var(--tint-rose);  margin-top: 0; }
+.photos-index .album-cover:nth-child(4n+2) { --cover-tint: var(--t-blue);  --cover-wash: var(--tint-blue);  margin-top: 2.2rem; }
+.photos-index .album-cover:nth-child(4n+3) { --cover-tint: var(--t-ochre); --cover-wash: var(--tint-ochre); margin-top: 0.7rem; }
+.photos-index .album-cover:nth-child(4n)   { --cover-tint: var(--t-sage);  --cover-wash: var(--tint-sage);  margin-top: 1.5rem; }
