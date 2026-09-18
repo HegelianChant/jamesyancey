@@ -35,7 +35,7 @@
   --step-4: 3.4rem;
 
   /* Layout */
-  --rule: 1px solid var(--line);
+  --rule: none;
   --content-max: 42rem;
   --nav-width: 14rem;
   --gutter: 1.5rem;
