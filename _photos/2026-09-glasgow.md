@@ -9,6 +9,6 @@ photos:
   - image: /assets/img/sample.svg
     caption: "A second photo, same album."
   - image: /assets/img/sample.svg
-    caption: "Captions are optional — leave this key out if you don't want one."
+    caption: "this is where captions go"
 ---
 sampleeeee text
