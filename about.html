@@ -8,3 +8,41 @@ permalink: /about/
 <div class="article-body">
   <p>this is sample text!</p>
 </div>
+
+<div class="subscribe">
+  <p class="section-label">Stay updated</p>
+  <form action="https://api.web3forms.com/submit" method="POST" class="subscribe-form" id="subscribe-form">
+    <input type="hidden" name="access_key" value="2e77aa3b-fcc1-46f6-b45c-1e391424d78d">
+    <input type="hidden" name="subject" value="New site subscriber">
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+    <button type="submit">Subscribe</button>
+  </form>
+  <p class="subscribe-note">No newsletter platform, no tracking — I'll email you directly when I post something new.</p>
+  <p class="subscribe-status" id="subscribe-status"></p>
+</div>
+
+<script>
+  document.getElementById('subscribe-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var status = document.getElementById('subscribe-status');
+    var data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function (response) {
+      if (response.ok) {
+        status.textContent = "Thanks — you're on the list.";
+        form.reset();
+      } else {
+        status.textContent = "Something went wrong — try again in a moment.";
+      }
+      status.classList.add('visible');
+    }).catch(function () {
+      status.textContent = "Something went wrong — try again in a moment.";
+      status.classList.add('visible');
+    });
+  });
+</script>
